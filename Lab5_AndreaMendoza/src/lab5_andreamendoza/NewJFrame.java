@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 public class NewJFrame extends javax.swing.JFrame {
 
@@ -107,7 +109,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton20 = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTree3 = new javax.swing.JTree();
+        JT_Aseo = new javax.swing.JTree();
         admin = new javax.swing.JDialog();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel13 = new javax.swing.JPanel();
@@ -883,7 +885,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("Eliminar", jPanel11);
 
-        jScrollPane3.setViewportView(jTree3);
+        jScrollPane3.setViewportView(JT_Aseo);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -1294,40 +1296,40 @@ public class NewJFrame extends javax.swing.JFrame {
             if ((em.getUsuario().equalsIgnoreCase(tf_user.getText())) && (em.getPw().equals(pf_pw.getText()))) {
                 P = em.getPuesto();
                 break;
-            } else if (E.indexOf(em) == E.size()-1 && em.getPw().equals(pf_pw.getText())) {
+            } else if (E.indexOf(em) == E.size() - 1 && em.getPw().equals(pf_pw.getText())) {
                 JOptionPane.showMessageDialog(this, "Usurio o contraseña incorrecta.");
             }
         }
         switch (P) {
-                    case "Administrador":
-                        setVisible(false);
-                        admin.setVisible(true);
-                        admin.pack();
-                        admin.setLocationRelativeTo(null);
-                        break;
+            case "Administrador":
+                setVisible(false);
+                admin.setVisible(true);
+                admin.pack();
+                admin.setLocationRelativeTo(null);
+                break;
 
-                    case "Dulceria":
-                        setVisible(false);
-                        dulceria.setVisible(true);
-                        dulceria.pack();
-                        dulceria.setLocationRelativeTo(null);
-                        break;
+            case "Dulceria":
+                setVisible(false);
+                dulceria.setVisible(true);
+                dulceria.pack();
+                dulceria.setLocationRelativeTo(null);
+                break;
 
-                    case "Aseo":
-                        this.setVisible(false);
-                        aseo.setVisible(true);
-                         aseo.pack();
-                        aseo.setLocationRelativeTo(null);
-                        break;
+            case "Aseo":
+                this.setVisible(false);
+                aseo.setVisible(true);
+                aseo.pack();
+                aseo.setLocationRelativeTo(null);
+                break;
 
-                    case "Boleteria":
-                        setVisible(false);
-                        peliculas.setVisible(true);
-                        peliculas.pack();
-                        peliculas.setLocationRelativeTo(null);
-                        break;
+            case "Boleteria":
+                setVisible(false);
+                peliculas.setVisible(true);
+                peliculas.pack();
+                peliculas.setLocationRelativeTo(null);
+                break;
         }
-    
+
     }//GEN-LAST:event_b_ingresarMouseClicked
 
     private void b_AgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_AgregarMouseClicked
@@ -1361,6 +1363,26 @@ public class NewJFrame extends javax.swing.JFrame {
         cb_aseo.setModel(modelo);
         cb_remaseo.setModel(modelo);
         JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
+
+        DefaultTreeModel m = (DefaultTreeModel) JT_Aseo.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+        DefaultMutableTreeNode nodo_aseo;
+        int centinela = -1;
+        for (int i = 0; i < raiz.getChildCount(); i++) {
+            if (raiz.getChildAt(i).toString().equals(fun)) {
+                DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Aseo(n,de,fun));
+                ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
+                centinela = 1;
+            }
+        }
+        if (centinela == -1) {
+            DefaultMutableTreeNode k = new DefaultMutableTreeNode(fun);
+            DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Aseo(n,de,fun));
+            k.add(p);
+            raiz.add(k);
+        }
+
+        m.reload();
     }//GEN-LAST:event_jButton8MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
@@ -1373,7 +1395,7 @@ public class NewJFrame extends javax.swing.JFrame {
         modelo.addElement(x);
         cb_peliculas.setModel(modelo);
         cb_rempeli.setModel(modelo);
-JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
+        JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void cb_dulcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_dulcesActionPerformed
@@ -1389,7 +1411,7 @@ JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
         modelo.addElement(x);
         cb_dulces.setModel(modelo);
         cb_remdulce.setModel(modelo);
-JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
+        JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void cb_dulcesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_dulcesItemStateChanged
@@ -1690,6 +1712,7 @@ JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTree JT_Aseo;
     private javax.swing.JDialog admin;
     private javax.swing.JDialog aseo;
     private javax.swing.JComboBox<String> aseocat;
@@ -1800,7 +1823,6 @@ JOptionPane.showMessageDialog(this, "Agregado exitósamente.");
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTree jTree1;
     private javax.swing.JTree jTree2;
-    private javax.swing.JTree jTree3;
     private javax.swing.JTree jTree4;
     private javax.swing.JComboBox<String> jc_funcion;
     private javax.swing.JComboBox<String> jc_puesto;
